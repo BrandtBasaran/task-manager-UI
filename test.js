@@ -1,8 +1,4 @@
 const taskId = `id`;
-const getButton = `get`;
-const putButton = `put`;
-const postButton = `post`;
-const deleteButton = `delete`;
 const taskList = `tasklist`;
 const taskName = `taskname`;
 
@@ -15,16 +11,16 @@ function httpGet(url)
 };
 
 var getData = function() {
-    var id = document.getElementById(taskId).textContent;
+    var id = document.getElementById('id').textContent;
     httpGet(`https://q36ezw76zh.execute-api.us-east-1.amazonaws.com/task/${id}`);
     console.log(response);
 }
 
 function httpPut(url) {
     let payload = {
-        taskId: `${id}`,
-        title: `${taskName}`,
-        body: `${taskList}`
+        taskId: `${document.getElementById('id')}`,
+        title: `${document.getElementById('taskname')}`,
+        body: `${document.getElementById('tasklist')}`
     }
 
     let options = {
@@ -41,15 +37,15 @@ function httpPut(url) {
 }
 
 var putData = function() {
-    var id = document.getElementById(taskId).textContent;
+    var id = document.getElementById('id').textContent;
     httpPut(`https://q36ezw76zh.execute-api.us-east-1.amazonaws.com/task/${id}`);
     console.log(response);  
 }
 
 var postData = function() {
-    var id = document.getElementById(taskId).textContent;
+    var id = document.getElementById('id').textContent;
     let url = `https://q36ezw76zh.execute-api.us-east-1.amazonaws.com/task/${id}`;
-    let data = {'UserId': `${taskId}`, 'TaskName': `${taskName}`, 'Task-List': `${taskList}`};
+    let data = {'UserId': `${document.getElementById('id')}`, 'TaskName': `${document.getElementById('taskname')}`, 'Task-List': `${document.getElementById('tasklist')}`};
     
     fetch(url, {
         method: 'POST',
@@ -73,9 +69,9 @@ var postData = function() {
 }
 
 var deleteData = function () {
-    var id = document.getElementById(taskId).textContent;
+    var id = document.getElementById('id').textContent;
     fetch(`https://q36ezw76zh.execute-api.us-east-1.amazonaws.com/task/${id}`, { method: 'DELETE' })
-        .then(() => taskList.innerHTML = 'Delete successful')
+        .then(() => document.getElementById('tasklist').innerHTML = 'Delete successful')
         .catch(error => {
             console.log('brandt messed up the deletes');
             console.error(error);
