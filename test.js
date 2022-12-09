@@ -1,30 +1,26 @@
-const userId = document.getElementById('id');
-const getButton = document.getElementById('get');
-const putButton = document.getElementById('put');
-const postButton = document.getElementById('post');
-const deleteButton = document.getElementById('delete');
-const taskList = document.getElementById('tasklist');
-const userName = document.getElementById('userName');
+const taskId = `id`;
+const taskList = `tasklist`;
+const taskName = `taskname`;
 
-function httpGet(theUrl)
+function httpGet(url)
 {
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.open( "GET", url, false ); // false for synchronous request
     xmlHttp.send( null );
     return xmlHttp.responseText;
 };
 
 var getData = function() {
-    httpGet('https://q36ezw76zh.execute-api.us-east-1.amazonaws.com/task/%7Bid%7D');
+    var id = document.getElementById('id').textContent;
+    httpGet(`https://q36ezw76zh.execute-api.us-east-1.amazonaws.com/task/${id}`);
     console.log(response);
 }
 
 function httpPut(url) {
-
     let payload = {
-        userId: `${userId}`,
-        title: `${userName}`,
-        body: `${taskList}`
+        taskId: `${document.getElementById('id')}`,
+        title: `${document.getElementById('taskname')}`,
+        body: `${document.getElementById('tasklist')}`
     }
 
     let options = {
@@ -33,40 +29,53 @@ function httpPut(url) {
     }
 
     fetch(url, options)
-    .then(response => console.log(response.status));
+    .then(response => console.log(response.status))
+    .catch(error => {
+        console.log('brandt messed up the puts');
+        console.error(error);
+    });
 }
 
 var putData = function() {
-    httpPut("https://q36ezw76zh.execute-api.us-east-1.amazonaws.com/task/%7Bid%7D");
+    var id = document.getElementById('id').textContent;
+    httpPut(`https://q36ezw76zh.execute-api.us-east-1.amazonaws.com/task/${id}`);
+    console.log(response);  
 }
 
-async function postData() {
-
-    let url = 'https://q36ezw76zh.execute-api.us-east-1.amazonaws.com/task';
-    let data = {'UserId': `${userId}`, 'UserName': `${userName}`, 'Task-List': `${taskList}`};
-
-    let res = await fetch(url, {
+var postData = function() {
+    var id = document.getElementById('id').textContent;
+    let url = `https://q36ezw76zh.execute-api.us-east-1.amazonaws.com/task/${id}`;
+    let data = {'UserId': `${document.getElementById('id')}`, 'TaskName': `${document.getElementById('taskname')}`, 'Task-List': `${document.getElementById('tasklist')}`};
+    
+    fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-    });
+    }).then(res => {
+        if (res.ok) {
 
-    if (res.ok) {
-
-        let ret = await res.json();
+        let ret = res.json();
         return JSON.parse(ret.data);
 
     } else {
         return `HTTP error: ${res.status}`;
-    }
+    }})
+    .catch(error => {
+        console.log('brandt messed up the post');
+        console.error(error);
+    });;
 }
 
 var deleteData = function () {
-    const element = taskList;
-    fetch('https://q36ezw76zh.execute-api.us-east-1.amazonaws.com/task', { method: 'DELETE' })
-        .then(() => element.innerHTML = 'Delete successful');
+    var id = document.getElementById('id').textContent;
+    fetch(`https://q36ezw76zh.execute-api.us-east-1.amazonaws.com/task/${id}`, { method: 'DELETE' })
+        .then(() => document.getElementById('tasklist').innerHTML = 'Delete successful')
+        .catch(error => {
+            console.log('brandt messed up the deletes');
+            console.error(error);
+        });
 }
 
 
