@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <title>Simple Sign up from</title>
+  <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brandt's UI</title>
     <script src = "test.js"></script>
-</head>
-<body>
-    <label>ID:</label>
-    <input type="text" id="id">
-    <br>
-    <button type="button" id = "get" onclick = 'getData()'>GET</button>
-    <br>
-    <button type="button" id = "put" onclick = 'putData()' >PUT</button>
-    <br>
-    <button type="button" id = "post" onclick='postData()'>POST</button>
-    <br>
-    <button type="button" id = "delete" onclick = 'deleteData()'>DELETE</button>
-    <br>
-    <br>
-    <div>
-        <p><label>Task-Manager:</label></p>
-        <br>
-        <label>Task Name</label>
-        <input type = "text" id = "taskname">
-        <br>
-        <textarea id="list" name="tasklist" rows="4" cols="50">
-        Your task-list
-        </textarea>
-    </div>
-</body>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link rel = 'stylesheet' href = "styles.css">
+  </head>
+  <body>
+    <form>
+      <h1>TASK MANAGER</h1>
+      <div class="icon">
+        <i class="fas fa-user-circle"></i>
+      </div>
+      <div class="formcontainer">
+      <div class="container">
+        <label for="uname"><strong>User ID</strong></label>
+        <input type="text" placeholder = "UserID" id="id">
+        <label><strong>Task Name</strong></label>
+        <input type = "text" id = "taskname" placeholder="Task Name">
+        <label><strong>Task Details</strong></label>
+        <input class = "input" type = "text" id="list" name="tasklist">
+      </div>
+      <button type="button" class = 'button' id = "get" onclick = 'getData()'>GET</button>
+      <button type="button" class = 'button' id = "put" onclick = 'putData()' >PUT</button>
+      <button type="button" class = 'button' id = "post" onclick='postData()'>POST</button>
+      <button type="button" class = 'button' id = "delete" onclick = 'deleteData()'>DELETE</button>
+    </form>
+  </body>
 </html>
