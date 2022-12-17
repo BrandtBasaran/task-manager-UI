@@ -2,17 +2,25 @@ const taskId = `id`;
 const taskList = `tasklist`;
 const taskName = `taskname`;
 
-function httpGet(url)
-{
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", url, false ); // false for synchronous request
-    xmlHttp.send( null );
-    return xmlHttp.responseText;
+const httpGet = function(url) {
+    const options = {
+        method: "GET",
+        mode: 'no-cors'
+    }
+
+    fetch(url, options)
+    .then( response => {
+        console.log(JSON.stringify(response));
+        document.getElementById('tasklist').innerHTML = response.body;
+    })
+    .catch(error => {
+        console.error(error);
+    });
 };
 
-var getData = function() {
-    var id = document.getElementById('id').textContent;
-    httpGet(`https://q36ezw76zh.execute-api.us-east-1.amazonaws.com/task/${id}`);
+const getData = function() {
+    const id = document.getElementById(taskId).value;
+    const response = httpGet(`https://q36ezw76zh.execute-api.us-east-1.amazonaws.com/task/${id}`);
     console.log(response);
 }
 
