@@ -37,7 +37,9 @@ function httpPut(url) {
     }
 
     fetch(url, options)
-    .then(response => console.log(response.status))
+    .then(response => {
+            console.log(JSON.stringify(response));
+            document.getElementById('tasklist').innerHTML = response.body;})
     .catch(error => {
         console.log('brandt messed up the puts');
         console.error(error);
@@ -53,7 +55,7 @@ var putData = function() {
 var postData = function() {
     var id = document.getElementById('id').textContent;
     let url = `https://q36ezw76zh.execute-api.us-east-1.amazonaws.com/task/${id}`;
-    let data = {'UserId': `${document.getElementById('id')}`, 'TaskName': `${document.getElementById('taskname')}`, 'Task-List': `${document.getElementById('tasklist')}`};
+    let data = {'TaskId': `${document.getElementById('id')}`, 'TaskName': `${document.getElementById('taskname')}`, 'Task-List': `${document.getElementById('tasklist')}`};
     
     fetch(url, {
         method: 'POST',
@@ -61,14 +63,14 @@ var postData = function() {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-    }).then(res => {
-        if (res.ok) {
+    }).then(response => {
+        if (response.ok) {
 
-        let ret = res.json();
-        return JSON.parse(ret.data);
+        console.log(JSON.stringify(response));
+        document.getElementById('tasklist').innerHTML = response.body;
 
     } else {
-        return `HTTP error: ${res.status}`;
+        return `HTTP error: ${response.status}`;
     }})
     .catch(error => {
         console.log('brandt messed up the post');
