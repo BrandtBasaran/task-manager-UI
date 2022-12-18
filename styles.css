@@ -35,7 +35,7 @@ html, body {
         height: 200px;
     }
 
-    button {
+    .btn {
     background-color: #4286f4;
     color: white;
     padding: 14px 0;

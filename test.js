@@ -1,6 +1,16 @@
+var option = {
+    animation: true,
+    delay: 5000
+};
 const taskId = `id`;
 const taskList = `tasklist`;
 const taskName = `taskname`;
+
+const Toasty = function () {
+    var toastHTMLElement = document.getElementById("EpicToast");
+    var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+    toastElement.show();
+};
 
 const httpGet = function (url) {
     const options = {
@@ -20,9 +30,12 @@ const httpGet = function (url) {
                 }
             }
             console.log(JSON.stringify(response));
+            document.getElementById("restext").innerHTML = response.body;
+            Toasty();
         })
         .catch(error => {
-            console.error(error);
+            document.getElementById('restext').innerHTML = 'brandt messed up the get';
+            Toasty();
         });
 };
 
@@ -38,20 +51,23 @@ function httpPut(url) {
         title: `${document.getElementById('taskname')}`,
         body: `${document.getElementById('tasklist')}`
     }
-
     let options = {
         method: "PUT",
         body: JSON.stringify(payload)
     }
-
     fetch(url, options)
         .then(response => {
+            response = {
+                "message": "Task PUT succesful",
+                "status": "success",
+                "task": { "taskId": 12345 }
+            }
             console.log(JSON.stringify(response));
-            document.getElementById('tasklist').innerHTML = response.body;
+            document.getElementById('restext').innerHTML = response.body;
         })
         .catch(error => {
-            console.log('brandt messed up the puts');
-            console.error(error);
+            document.getElementById('restext').innerHTML = 'brandt messed up the puts';
+            Toasty();
         });
 }
 
@@ -73,28 +89,34 @@ var postData = function () {
         },
         body: JSON.stringify(data),
     }).then(response => {
+        response = {
+            "message": "Task POST succesful",
+            "status": "success",
+            "task": { "taskId": 12345 }
+        }
         if (response.ok) {
-
             console.log(JSON.stringify(response));
-            document.getElementById('tasklist').innerHTML = response.body;
-
+            document.getElementById('restext').innerHTML = response.body;
         } else {
             return `HTTP error: ${response.status}`;
         }
     })
         .catch(error => {
-            console.log('brandt messed up the post');
-            console.error(error);
+            document.getElementById('restext').innerHTML = 'brandt messed up the post';
+            Toasty();
         });;
 }
 
 var deleteData = function () {
     var id = document.getElementById('id').textContent;
     fetch(`https://q36ezw76zh.execute-api.us-east-1.amazonaws.com/task/${id}`, { method: 'DELETE' })
-        .then(() => document.getElementById('tasklist').innerHTML = 'Delete successful')
+        .then(() => {
+            document.getElementById('restext').innerHTML = 'Delete successful';
+            Toasty();
+        })
         .catch(error => {
-            console.log('brandt messed up the deletes');
-            console.error(error);
+            document.getElementById('restext').innerHTML = 'brandt messed up the delete';
+            Toasty();
         });
 }
 
